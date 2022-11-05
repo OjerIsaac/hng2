@@ -1,11 +1,13 @@
 <?php
 
+header("Content-Type: application/json");
 $input = @file_get_contents("php://input");
 $data = json_decode($input, true);
 
 if (empty($data) || empty($data['operation_type']) || empty($data['x']) || empty($data['y']))
 {
-    $returnArr = array("errorCode" => "400", "status" => "false", "ResponseMsg" => "Something Went Wrong!");
+    // $returnArr = array("errorCode" => "400", "status" => "false", "ResponseMsg" => "Something Went Wrong!");
+    $returnArr = array("slackUsername" => "isaacojerumu", "result" => 0, "operation_type" => $data['operation_type']);
 } else
 {
     $r_type = $data['operation_type'];
@@ -23,10 +25,10 @@ if (empty($data) || empty($data['operation_type']) || empty($data['x']) || empty
             $result = $r_x * $r_y;
             break;
         default:
-        $result = null;
+        $result = 0;
     }
 
-    $returnArr = array("slackUsername" => "isaacojerumu", "operation_type" => $r_type, "result" => $result);
+    $returnArr = array("slackUsername" => "isaacojerumu", "result" => $result, "operation_type" => $r_type,);
 }
 
 echo json_encode($returnArr);
